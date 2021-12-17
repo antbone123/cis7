@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+ 
+string getkey(string ptr, string a){
+    if(a.size() >= ptr.size())
+        return a;
+    else{
+        int psize = ptr.size()-a.size();
+        int ksize = a.size(); 
+        while(psize >= ksize)
+        {
+            a += a;
+            psize -= ksize;
+        }
+ 
+        a += a.substr(0, psize);
+        return a;
+    }
+}
+string getenc(string pt, string k){
+ 
+    string c = "";
+    for(int i=0;i<pt.size();i++)
+        c += (char) (((int)pt[i]-'A' + (int)k[i]-'A') % 26) + 'A';
+ 
+    return c;
+}
+ 
+string getdec(string ct, string k){
+ 
+    string pt = "";
+    for(int i=0;i<ct.size();i++)
+        pt += (char) ((((int)ct[i]- 'A' - (k[i] -'A')) + 26) % 26) + 'A';
+ 
+    return pt;
+}
+ 
+int main()
+{
+    string plaintext = "GEEKSFORGEEKS";
+
+    string key = "AYUSH";
+ 
+     key = getkey(plaintext, key);
+ 
+    cout<<" your plaintext: "<< plaintext <<endl;
+ 
+    cout<<" your Key: "<< key <<endl;
+ 
+    string ciphertext = getenc(plaintext, key);
+ 
+    cout<<" new Ciphertext: "<< ciphertext <<endl;
+ 
+     plaintext = getdec(ciphertext, key);
+ 
+    cout<<" new Plaintext: "<< plaintext <<endl;
+ 
+    return 0;
+}
